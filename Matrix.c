@@ -33,3 +33,8 @@ void matrixCopy(Matrix *src, Matrix *dst){
     for(int i=0;i<src->width * src->height;i++)
         dst->array[i] = src->array[i];
 }
+
+void matrixFree(Matrix *m){
+    free(m->array);
+    free(m);
+}

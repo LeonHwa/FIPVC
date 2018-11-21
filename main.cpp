@@ -5,10 +5,14 @@
 //  Created by appl on 2018/11/21.
 //  Copyright © 2018年 leon. All rights reserved.
 //
+#include <opencv2/opencv.hpp>
+#include <string.h>
+
 
 #ifdef __cplusplus
 extern "C"{
 #endif
+    
     
 #include "Matrix.h"
 #include "mathematic.h"
@@ -20,15 +24,12 @@ extern "C"{
 
 
 
-#include <iostream>
-#include <opencv2/opencv.hpp>
-#include <string.h>
-
 
 
 using namespace std;
 
 char *Path(const char * fileName){
+    
     const char *basePath  = "/Users/appl/Documents/GitHub/FIPVC/FIPVC/";
     const size_t len = strlen(basePath)+strlen(fileName);
     char *path =  new char[len +1];
@@ -40,7 +41,7 @@ void doSomething(Matrix *src, Matrix *dst);
 
 int main(int argc, const char * argv[]) {
     
-    IplImage *src =cvLoadImage(Path("Lena.png"), 0);
+    IplImage *src =cvLoadImage(Path("wirebond_mask.png"), 0);
     int height =  src->height;
     int width = src->width;
     Matrix * m_src = matrixMake(width, height);
@@ -66,20 +67,27 @@ int main(int argc, const char * argv[]) {
     cvShowImage("dst", dst);
     cvWaitKey(0);
     
+    
+    matrixFree(m_src);
+    matrixFree(m_dst);
     return 0;
 }
 
 
 void doSomething(Matrix *src, Matrix *dst){
-    Matrix *gauss = matrixMake(5, 5);
-    double arr[25] = { 2, 4, 5, 4, 2,
-        4, 9,12, 9, 4,
-        5,12,15,12, 5,
-        4, 9,12, 9, 4,
-        2, 4, 5, 4, 2};
-    matrixSet(gauss, arr);
-    matrixConvolution(src, dst, gauss);
-    matrixMultreal(dst, dst, 1.0/159.0);
+//    Matrix *gauss = matrixMake(5, 5);
+//    double arr[25] = { 2, 4, 5, 4, 2,
+//        4, 9,12, 9, 4,
+//        5,12,15,12, 5,
+//        4, 9,12, 9, 4,
+//        2, 4, 5, 4, 2};
+    Matrix *filter = matrixMake(3, 3);
+    double arr[25] = { -1, -1, -1, 2, 2,
+        2, -1,-1, -1};
+    matrixSet(filter, arr);
+    matrixConvolution(src, dst, filter);
+//    matrixMultreal(dst, dst, 1.0/159.0);
+    matrixFree(filter);
 }
 
 

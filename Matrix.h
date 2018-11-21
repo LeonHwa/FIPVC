@@ -26,4 +26,5 @@ Matrix *matrixMake(int width, int height);
 void matrixSet(Matrix *src, double *array);
 
 void matrixCopy(Matrix *src, Matrix *dst);
+void matrixFree(Matrix *m);
 #endif /* Matrix_h */

@@ -10,5 +10,10 @@
 #define Canny_h
 
 #include <stdio.h>
+#include "Matrix.h"
 
+void Canny(Matrix *src,Matrix *dst,int sobel_size,double threshold1,double threshold2);
+void Gaussission(Matrix *src,Matrix *dst);
+void Sobel(Matrix *src,Matrix *amplitude, Matrix *direction);
+void getAngle(Matrix *amplitude, Matrix *directionX, Matrix *directionY);
 #endif /* Canny_h */
