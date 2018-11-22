@@ -12,6 +12,10 @@
 #include <stdio.h>
 #include "Matrix.h"
 
+
+
+
+
 void Zero(double *src,int width,int height);
 
 
@@ -24,5 +28,7 @@ void matrixConvolution(Matrix *src, Matrix *dst, Matrix *mask);
  矩阵乘实数
  */
 void matrixMultreal(Matrix *src, Matrix *dst,double k);
+
+void matrixToBinary(Matrix *src, Matrix *dst);
 
 #endif /* mathematic_h */

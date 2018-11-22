@@ -9,7 +9,9 @@
 #include "mathematic.h"
 
 void Zero(double *src,int width,int height){
-    memset(src, 0, width * height);
+    for (int i = 0; i < width * height; i++) {
+        src[i] = 0;
+    }
 }
 
 
@@ -50,4 +52,11 @@ void matrixConvolution(Matrix *src, Matrix *dst, Matrix *mask){
 void matrixMultreal(Matrix *src, Matrix *dst,double k){
     for(int i=0;i<src->width * src->height;i++)
         dst->array[i] = src->array[i]*k;
+}
+
+
+void matrixToBinary(Matrix *src, Matrix *dst){
+    for(int i=0;i<src->width * src->height;i++){
+        dst->array[i] = (src->array[i] != 0 ? 1 : 0);
+    }
 }

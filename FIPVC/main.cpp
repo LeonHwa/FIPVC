@@ -16,7 +16,7 @@ extern "C"{
     
 #include "Matrix.h"
 #include "mathematic.h"
-    
+#include "Canny.h"
     
 #ifdef __cplusplus
 }
@@ -30,7 +30,7 @@ using namespace std;
 
 char *Path(const char * fileName){
     
-    const char *basePath  = "/Users/appl/Documents/GitHub/FIPVC/FIPVC/";
+    const char *basePath  = "/Users/leon/Documents/GitHub/FIPVC/FIPVC/";
     const size_t len = strlen(basePath)+strlen(fileName);
     char *path =  new char[len +1];
     strcpy(path, basePath);
@@ -41,7 +41,7 @@ void doSomething(Matrix *src, Matrix *dst);
 
 int main(int argc, const char * argv[]) {
     
-    IplImage *src =cvLoadImage(Path("wirebond_mask.png"), 0);
+    IplImage *src =cvLoadImage(Path("lena.png"), 0);
     int height =  src->height;
     int width = src->width;
     Matrix * m_src = matrixMake(width, height);
@@ -81,13 +81,15 @@ void doSomething(Matrix *src, Matrix *dst){
 //        5,12,15,12, 5,
 //        4, 9,12, 9, 4,
 //        2, 4, 5, 4, 2};
-    Matrix *filter = matrixMake(3, 3);
-    double arr[25] = { -1, -1, -1, 2, 2,
-        2, -1,-1, -1};
-    matrixSet(filter, arr);
-    matrixConvolution(src, dst, filter);
+//    Matrix *filter = matrixMake(3, 3);
+//    double arr[25] = { -1, -1, -1, 2, 2,
+//        2, -1,-1, -1};
+//    matrixSet(filter, arr);
+//    matrixConvolution(src, dst, filter);
 //    matrixMultreal(dst, dst, 1.0/159.0);
-    matrixFree(filter);
+//    matrixFree(filter);
+    
+    Canny(src, dst, 3, 20, 60);
 }
 
 

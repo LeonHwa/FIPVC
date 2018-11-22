@@ -24,6 +24,13 @@ Matrix *matrixMake(int width, int height){
     return m;
 }
 
+Position *positionMake(int x, int y){
+    Position *p = (Position *)malloc(sizeof(Position));
+    p->x = x;
+    p->y = y;
+    return p;
+}
+
 void matrixSet(Matrix *src, double *array){
     for(int i=0;i<src->width * src->height;i++)
         src->array[i] = array[i];

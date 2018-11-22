@@ -19,9 +19,16 @@ typedef struct MatrixStruct {
     double  *array;
 }Matrix;
 
+typedef struct Position_ Position;
+struct Position_{
+    int x;
+    int y;
+};
+
 #pragma pack()
 
 Matrix *matrixMake(int width, int height);
+Position *positionMake(int x, int y);
 
 void matrixSet(Matrix *src, double *array);
 
