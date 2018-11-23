@@ -1,8 +1,8 @@
 //
 //  Canny.c
-//  OCImageProcessing
+//  FIPVC
 //
-//  Created by appl on 2018/11/12.
+//  Created by leon on 2018/11/12.
 //  Copyright © 2018年 appl. All rights reserved.
 //
 
@@ -86,25 +86,27 @@ void Scharr(Matrix *src,Matrix *amplitude, Matrix *edgeAngle){
     Matrix *dst_x = matrixMake(width, height);
     Matrix *dst_y = matrixMake(width, height);
     
-    //    double sobel_x[9] = { 1,0,-1,
-    //        1, 0, -1,
-    //        1, 0, -1};
-    //    double sobel_y[9] = { 3,10,3,
-    //        0, 0, 0,
-    //        -3, -10, -3};
 
-    double sobel_y[9] = { -1,-2,-1,
-                           0, 0, 0,
-                           1, 2, 1};
-    double sobel_x[9] = { -1, 0, 1,
-                           -2, 0, 2,
-                           -1, 0, 1};
-    Matrix *m_sobel_x = matrixMake(3, 3);
-    Matrix *m_sobel_y = matrixMake(3, 3);
-    matrixSet(m_sobel_x, sobel_x);
-    matrixSet(m_sobel_y, sobel_y);
-    matrixConvolution(src, dst_x, m_sobel_x);
-    matrixConvolution(src, dst_y, m_sobel_y);
+//    double sobel_y[9] = { -1,-2,-1,
+//                           0, 0, 0,
+//                           1, 2, 1};
+//    double sobel_x[9] = { -1, 0, 1,
+//                           -2, 0, 2,
+//                           -1, 0, 1};
+    
+    ///opencv 中使用的Scharr核
+    double g_y[9] = { -3,-10,-3,
+        0, 0, 0,
+        3, 10, 3};
+    double g_x[9] = { -3, 0, 3,
+        -10, 0, 10,
+        -3, 0, 3};
+    Matrix *m_g_x = matrixMake(3, 3);
+    Matrix *m_g_y = matrixMake(3, 3);
+    matrixSet(m_g_x, g_x);
+    matrixSet(m_g_y, g_y);
+    matrixConvolution(src, dst_x, m_g_x);
+    matrixConvolution(src, dst_y, m_g_y);
     for(int i=0;i<width * height;i++)
         dst_y->array[i] = -dst_y->array[i];
    
@@ -120,8 +122,8 @@ void Scharr(Matrix *src,Matrix *amplitude, Matrix *edgeAngle){
     
     matrixFree(dst_x);
     matrixFree(dst_y);
-    matrixFree(m_sobel_x);
-    matrixFree(m_sobel_y);
+    matrixFree(m_g_x);
+    matrixFree(m_g_y);
 }
 
 void suppressionUnlessMax(Matrix *amplitude, Matrix *edgeDirection, Matrix *dst){

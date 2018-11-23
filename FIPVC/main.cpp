@@ -2,7 +2,7 @@
 //  main.cpp
 //  FIPVC
 //
-//  Created by appl on 2018/11/21.
+//  Created by leon on 2018/11/21.
 //  Copyright © 2018年 leon. All rights reserved.
 //
 #include <opencv2/opencv.hpp>
@@ -24,13 +24,14 @@ extern "C"{
 
 
 
-
-
+#define low_threshold 50
+#define threshold_ratio 3
+#define hight_threshold   low_threshold * threshold_ratio
 using namespace std;
 
 char *Path(const char * fileName){
     
-    const char *basePath  = "/Users/leon/Documents/GitHub/FIPVC/FIPVC/";
+    const char *basePath  = "/Users/appl/Documents/GitHub/FIPVC/FIPVC/";
     const size_t len = strlen(basePath)+strlen(fileName);
     char *path =  new char[len +1];
     strcpy(path, basePath);
@@ -41,7 +42,7 @@ void doSomething(Matrix *src, Matrix *dst);
 
 int main(int argc, const char * argv[]) {
     
-    IplImage *src =cvLoadImage(Path("lena.png"), 0);
+    IplImage *src =cvLoadImage(Path("lena_color.png"), 0);
     int height =  src->height;
     int width = src->width;
     Matrix * m_src = matrixMake(width, height);
@@ -51,7 +52,7 @@ int main(int argc, const char * argv[]) {
             m_src->array[j*width+i]=cvGetReal2D(src,j,i);
         }
     }
-   
+
     doSomething(m_src,m_dst);
     
     IplImage *dst =cvCreateImage(cvSize(width, height), src->depth, 1);
@@ -65,8 +66,14 @@ int main(int argc, const char * argv[]) {
     
     cvNamedWindow("dst", 1);
     cvShowImage("dst", dst);
-    cvWaitKey(0);
+
     
+    IplImage *cv_dst =  cvCreateImage(CvSize(width,height), src->depth, 1);
+    cvCanny(src, cv_dst, low_threshold, hight_threshold);
+    
+    cvNamedWindow("opencv_dst", 1);
+    cvShowImage("opencv_dst", cv_dst);
+    cvWaitKey(0);
     
     matrixFree(m_src);
     matrixFree(m_dst);
@@ -89,7 +96,7 @@ void doSomething(Matrix *src, Matrix *dst){
 //    matrixMultreal(dst, dst, 1.0/159.0);
 //    matrixFree(filter);
     
-    Canny(src, dst, 3, 20, 60);
+    Canny(src, dst, 3, low_threshold, hight_threshold);
 }
 
 

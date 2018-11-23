@@ -1,8 +1,8 @@
 //
 //  algrithm.h
-//  OCImageProcessing
+//  FIPVC
 //
-//  Created by appl on 2018/10/31.
+//  Created by leon on 2018/10/31.
 //  Copyright © 2018年 appl. All rights reserved.
 //
 
