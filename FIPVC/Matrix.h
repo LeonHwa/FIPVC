@@ -19,8 +19,8 @@ typedef struct MatrixStruct {
     double  *array;
 }Matrix;
 
-typedef struct Position_ Position;
-struct Position_{
+typedef struct MatrixPosition_ Position;
+struct MatrixPosition_{
     int x;
     int y;
 };

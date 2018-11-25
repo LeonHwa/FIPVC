@@ -17,7 +17,7 @@ extern "C"{
 #include "Matrix.h"
 #include "mathematic.h"
 #include "Canny.h"
-    
+#include "Hough.h"
 #ifdef __cplusplus
 }
 #endif
@@ -31,7 +31,7 @@ using namespace std;
 
 char *Path(const char * fileName){
     
-    const char *basePath  = "/Users/appl/Documents/GitHub/FIPVC/FIPVC/";
+    const char *basePath  = "/Users/leon/Documents/GitHub/FIPVC/FIPVC/";
     const size_t len = strlen(basePath)+strlen(fileName);
     char *path =  new char[len +1];
     strcpy(path, basePath);
@@ -42,41 +42,70 @@ void doSomething(Matrix *src, Matrix *dst);
 
 int main(int argc, const char * argv[]) {
     
-    IplImage *src =cvLoadImage(Path("lena_color.png"), 0);
-    int height =  src->height;
-    int width = src->width;
-    Matrix * m_src = matrixMake(width, height);
-    Matrix * m_dst = matrixMake(width, height);
-    for (int j=0;j<height; j++) {
-        for(int i=0;i<width;i++){
-            m_src->array[j*width+i]=cvGetReal2D(src,j,i);
+
+        int height =  101;
+        int width = 101;
+     Matrix * m_src =  matrixMake(width, height);
+     Matrix * m_dst =  matrixMake(width, height);
+        for (int j=0;j<height; j++) {
+            for(int i=0;i<width;i++){
+                int index = j * width + i;
+                if(index == 0 ||
+                   (j == 0 && i == width - 1) ||
+                   (j == height - 1 && i == width - 1) ||
+                   (j == height - 1 && i == 0) ||
+                   (j == height/2 && i == width/2 ))
+                m_src->array[index] = 255;
+            }
+        }
+    Matrix *houghMat  = Hough(m_src, m_dst, 0);
+    IplImage *image =cvCreateImage(cvSize(houghMat->width, houghMat->height), 8, 1);
+    for (int j=0;j<houghMat->height; j++) {
+        for(int i=0;i<houghMat->width;i++){
+            cvSetReal2D(image, j, i,houghMat->array[j * houghMat->width+i]);
         }
     }
-
-    doSomething(m_src,m_dst);
-    
-    IplImage *dst =cvCreateImage(cvSize(width, height), src->depth, 1);
-    for (int j=0;j<height; j++) {
-        for(int i=0;i<width;i++){
-            cvSetReal2D(dst, j, i,m_dst->array[j*width+i]);
-        }
-    }
-    cvNamedWindow("src", 1);
-    cvShowImage("src", src);
-    
-    cvNamedWindow("dst", 1);
-    cvShowImage("dst", dst);
-
-    
-    IplImage *cv_dst =  cvCreateImage(CvSize(width,height), src->depth, 1);
-    cvCanny(src, cv_dst, low_threshold, hight_threshold);
-    
-    cvNamedWindow("opencv_dst", 1);
-    cvShowImage("opencv_dst", cv_dst);
+    cvNamedWindow("houghMat", 1);
+    cvShowImage("houghMat", image);
     cvWaitKey(0);
     
-    matrixFree(m_src);
-    matrixFree(m_dst);
+    //Fig1010(a)(five-dots).tif
+//    char *path = Path("nana.png");
+//    IplImage *src =cvLoadImage(path, 0);
+//    int height =  src->height;
+//    int width = src->width;
+//    Matrix * m_src = matrixMake(width, height);
+//    Matrix * m_dst = matrixMake(width, height);
+//    for (int j=0;j<height; j++) {
+//        for(int i=0;i<width;i++){
+//            m_src->array[j*width+i]=cvGetReal2D(src,j,i);
+//        }
+//    }
+//
+//    doSomething(m_src,m_dst);
+//
+//    IplImage *dst =cvCreateImage(cvSize(width, height), src->depth, 1);
+//    for (int j=0;j<height; j++) {
+//        for(int i=0;i<width;i++){
+//            cvSetReal2D(dst, j, i,m_dst->array[j*width+i]);
+//        }
+//    }
+//    cvNamedWindow("src", 1);
+//    cvShowImage("src", src);
+//
+//    cvNamedWindow("dst", 1);
+//    cvShowImage("dst", dst);
+//
+//
+//    IplImage *cv_dst =  cvCreateImage(CvSize(width,height), src->depth, 1);
+//    cvCanny(src, cv_dst, low_threshold, hight_threshold);
+//
+//    cvNamedWindow("opencv_dst", 1);
+//    cvShowImage("opencv_dst", cv_dst);
+    cvWaitKey(0);
+    
+//    matrixFree(m_src);
+//    matrixFree(m_dst);
     return 0;
 }
 
@@ -95,8 +124,18 @@ void doSomething(Matrix *src, Matrix *dst){
 //    matrixConvolution(src, dst, filter);
 //    matrixMultreal(dst, dst, 1.0/159.0);
 //    matrixFree(filter);
-    
+    IplImage *src_image =cvLoadImage(Path("nana.png"), 0);
     Canny(src, dst, 3, low_threshold, hight_threshold);
+    Matrix *houghMat  = Hough(dst, NULL, 0);
+    IplImage *image =cvCreateImage(cvSize(houghMat->width, houghMat->height), src_image->depth, 1);
+    for (int j=0;j<houghMat->height; j++) {
+        for(int i=0;i<houghMat->width;i++){
+            cvSetReal2D(image, j, i,houghMat->array[j * houghMat->width+i]);
+        }
+    }
+    cvNamedWindow("houghMat", 1);
+    cvShowImage("houghMat", image);
+    cvWaitKey(0);
 }
 
 

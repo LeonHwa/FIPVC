@@ -60,3 +60,5 @@ void matrixToBinary(Matrix *src, Matrix *dst){
         dst->array[i] = (src->array[i] != 0 ? 1 : 0);
     }
 }
+
+

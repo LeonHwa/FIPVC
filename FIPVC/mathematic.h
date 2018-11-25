@@ -10,6 +10,7 @@
 #define mathematic_h
 
 #include <stdio.h>
+#include <math.h>
 #include "Matrix.h"
 
 
