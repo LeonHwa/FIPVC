@@ -15,10 +15,38 @@
 
 
 
+/**
+ 
+ -----------> x
+ | \
+ | θ\
+ |   \
+ y
+ 根据  p = x*cos(θ) + y * sin(θ)
+ θ就是图像上直线相对于y轴的角度
+ (θ, p) 表明 图像中满足：角度为θ, 长度为p的法线
+ 的线段就是图像中的直线部分，发现和直线的交汇点可由 tan(θ) = x/y
+ 得出
+
+ @param image 绘制了直线霍夫直线的图像
+ @param theta 交点的θ值 -90——90
+ @param pho 交点的p值 -D ~ D
+ */
 void DrawLine(Matrix *image, double theta, double pho){
-    
-     for (int i = 0; i < image->width; i++) {
-         
+    int width = image->width;
+    int height = image->height;
+     for (int x = 0; x < width; x++) {
+         //tan(θ) θ == 90 和 -90 时无值
+         if(theta != - M_PI_2 || theta !=  M_PI_2){
+             int y = x/tan(theta);
+             if(theta > 0 && y <= height){
+                 image->array[y * width + x] = 255;
+             }else if(theta < 0 && y > height){
+                 image->array[y * width + x] = 255;
+             }
+         }else{
+             
+         }
      }
     
 }
@@ -38,7 +66,7 @@ ph0为[-D,D] (D为图像对角线长度)
  
  pho = x*cos(theta) + y * sin(theta)
  
- @param polar 坐标系
+ @param polar 坐标系(theta, pho)
  @param x 系数，边缘点的横坐标
  @param y 系数，边缘点的纵坐标
  */
@@ -57,7 +85,7 @@ void PolarShift(Matrix *polar, int x, int y){
 Matrix * Hough(Matrix *src, Matrix *dst, int length){
     int width = src->width;
     int height = src->height;
-    /// 显示上下半部分
+    /// 显示正负上下部分
     int rho_height = RHO_RANGE(width, height) * 2;
     Matrix *polar = matrixMake(THETA_RANGE/THETA_STEP, rho_height);
     for (int j = 0; j < height ; j++) {
