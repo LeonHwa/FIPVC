@@ -25,6 +25,7 @@
 		3515BCC821AC2EFD00367D29 /* libopencv_flann.3.4.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3515BCB621AC2EFD00367D29 /* libopencv_flann.3.4.3.dylib */; };
 		3515BCC921AC2EFD00367D29 /* libopencv_calib3d.3.4.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3515BCB721AC2EFD00367D29 /* libopencv_calib3d.3.4.3.dylib */; };
 		3515BCCA21AC2EFD00367D29 /* libopencv_videoio.3.4.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3515BCB821AC2EFD00367D29 /* libopencv_videoio.3.4.3.dylib */; };
+		3515BCD121AD81E600367D29 /* Histogram.c in Sources */ = {isa = PBXBuildFile; fileRef = 3515BCD021AD81E600367D29 /* Histogram.c */; };
 		3598B5CB21A5840900259C7D /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3598B5CA21A5840900259C7D /* main.cpp */; };
 		3598B5DD21A5847C00259C7D /* mathematic.c in Sources */ = {isa = PBXBuildFile; fileRef = 3598B5D121A5847B00259C7D /* mathematic.c */; };
 		3598B5DE21A5847C00259C7D /* Matrix.c in Sources */ = {isa = PBXBuildFile; fileRef = 3598B5D221A5847B00259C7D /* Matrix.c */; };
@@ -67,6 +68,8 @@
 		3515BCCC21AC618000367D29 /* bigx.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bigx.jpg; sourceTree = "<group>"; };
 		3515BCCD21AC638100367D29 /* road.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = road.jpg; sourceTree = "<group>"; };
 		3515BCCE21AC68E300367D29 /* 22.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 22.jpeg; sourceTree = "<group>"; };
+		3515BCCF21AD81E600367D29 /* Histogram.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Histogram.h; sourceTree = "<group>"; };
+		3515BCD021AD81E600367D29 /* Histogram.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Histogram.c; sourceTree = "<group>"; };
 		354B99F221AAD48E00B07C18 /* fivedots.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = fivedots.tif; sourceTree = "<group>"; };
 		354B99F321AAD9A100B07C18 /* lenacolor.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = lenacolor.gif; sourceTree = "<group>"; };
 		3598B5C721A5840900259C7D /* FIPVC */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = FIPVC; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -173,6 +176,8 @@
 				3598B5DB21A5847C00259C7D /* Canny.h */,
 				582958DF21A7CDED009B67F5 /* Hough.h */,
 				582958E021A7CDED009B67F5 /* Hough.c */,
+				3515BCCF21AD81E600367D29 /* Histogram.h */,
+				3515BCD021AD81E600367D29 /* Histogram.c */,
 				3598B5D321A5847B00259C7D /* LICENSE */,
 				3598B64B21A5C41500259C7D /* nana.png */,
 				3598B5D121A5847B00259C7D /* mathematic.c */,
@@ -244,6 +249,7 @@
 				3598B5DE21A5847C00259C7D /* Matrix.c in Sources */,
 				3598B5DF21A5847C00259C7D /* Canny.c in Sources */,
 				3598B5DD21A5847C00259C7D /* mathematic.c in Sources */,
+				3515BCD121AD81E600367D29 /* Histogram.c in Sources */,
 				582958E121A7CDED009B67F5 /* Hough.c in Sources */,
 				3598B5CB21A5840900259C7D /* main.cpp in Sources */,
 				3598B5E021A5847C00259C7D /* algrithm.c in Sources */,

@@ -18,6 +18,7 @@ extern "C"{
 #include "mathematic.h"
 #include "Canny.h"
 #include "Hough.h"
+#include "Histogram.h"
 #ifdef __cplusplus
 }
 #endif
@@ -138,7 +139,7 @@ int main(int argc, const char * argv[]) {
  
 //    houghLineTest();
     
-    char *path = Path("22.jpeg");
+    char *path = Path("nana.png");
     IplImage *src =cvLoadImage(path, 0);
     int height =  src->height;
     int width = src->width;
@@ -152,10 +153,6 @@ int main(int argc, const char * argv[]) {
 
     doSomething(m_src,m_dst);
 
-
-    Matrix * Hough_dst = matrixMake(width, height);
-
-    m_dst  =  Hough(m_dst, Hough_dst, height * 0.8);
 
     IplImage *dst =cvCreateImage(cvSize(m_dst->width, m_dst->height), src->depth, 1);
     for (int j=0;j<m_dst->height; j++) {
@@ -185,7 +182,8 @@ int main(int argc, const char * argv[]) {
 
 void doSomething(Matrix *src, Matrix *dst){
   
-    Canny(src, dst, 3, low_threshold, hight_threshold);
+//    Canny(src, dst, 3, low_threshold, hight_threshold);
+    HistogramEqualization(src, dst);
    
 }
 
